@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ event.name }} Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>{{ event.name }}</h1>
+    <p><strong>Address:</strong> {{ event.address }}</p>
+    <p><strong>Time:</strong> {{ event.time }}</p>
+    <p><strong>Domain:</strong> {{ event.domain }}</p>
+    <h2>Registrations</h2>
+    <ul>
+        {% for registration in registrations %}
+        <li>{{ registration.name }}{% if registration.team_members %} (Team Members: {{ registration.team_members }}){% endif %}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('index') }}">Back to Events</a>
+    <a href="{{ url_for('chat', event_id=event.id) }}" class="btn">Go to Chat Room</a>
+</body>
+</html>
