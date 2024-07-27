@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, join_room, leave_room, send
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///events.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 socketio = SocketIO(app)
 
@@ -21,7 +22,9 @@ class Registration(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
-    team_members = db.Column(db.String(500), nullable=True)
+    college_name = db.Column(db.String(100), nullable=False)
+    branch = db.Column(db.String(50), nullable=False)
+    year = db.Column(db.String(10), nullable=False)
 
 @app.route('/')
 def index():
@@ -46,8 +49,10 @@ def register(event_id):
     if request.method == 'POST':
         name = request.form['name']
         phone = request.form['phone']
-        team_members = request.form['team_members']
-        new_registration = Registration(event_id=event_id, name=name, phone=phone, team_members=team_members)
+        college_name = request.form['college_name']
+        branch = request.form['branch']
+        year = request.form['year']
+        new_registration = Registration(event_id=event_id, name=name, phone=phone, college_name=college_name, branch=branch, year=year)
         db.session.add(new_registration)
         db.session.commit()
         return redirect(url_for('event_detail', event_id=event_id))
