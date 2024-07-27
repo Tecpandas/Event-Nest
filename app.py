@@ -4,7 +4,9 @@ from flask_socketio import SocketIO, join_room, leave_room, send
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///events.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://Root:yes@localhost/event'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 socketio = SocketIO(app)
 
@@ -29,6 +31,7 @@ def index():
     return render_template('index.html', events=events)
 
 @app.route('/post_event', methods=['GET', 'POST'])
+
 def post_event():
     if request.method == 'POST':
         name = request.form['name']
@@ -37,21 +40,35 @@ def post_event():
         domain = request.form['domain']
         new_event = Event(name=name, address=address, time=time, domain=domain)
         db.session.add(new_event)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            return str(e), 500
         return redirect(url_for('index'))
     return render_template('post_event.html')
 
 @app.route('/register/<int:event_id>', methods=['GET', 'POST'])
+
 def register(event_id):
+    event = Event.query.get(event_id)
+    if not event:
+        return "Event not found", 404
+    
     if request.method == 'POST':
         name = request.form['name']
         phone = request.form['phone']
-        team_members = request.form['team_members']
+        team_members = request.form.get('team_members', '')  # Use .get to handle the case when the field is not provided
         new_registration = Registration(event_id=event_id, name=name, phone=phone, team_members=team_members)
         db.session.add(new_registration)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            return str(e), 500
         return redirect(url_for('event_detail', event_id=event_id))
     return render_template('register.html', event_id=event_id)
+
 
 @app.route('/event/<int:event_id>')
 def event_detail(event_id):
