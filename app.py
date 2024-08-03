@@ -97,3 +97,26 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     socketio.run(app, debug=True)
+
+#     USE mysql;
+# SELECT user, host, authentication_string FROM mysql.user WHERE user='Root' AND host='localhost';
+# CREATE USER 'Root'@'localhost' IDENTIFIED BY 'yes';
+# GRANT ALL PRIVILEGES ON event.* TO 'Root'@'localhost';
+# FLUSH PRIVILEGES;
+# USE event;
+# SHOW TABLES;
+# SELECT * FROM event;
+# SELECT * FROM registration;
+# SELECT 
+#     registration.id AS registration_id, 
+#     registration.name AS registrant_name, 
+#     registration.phone AS registrant_phone, 
+#     registration.team_members AS registrant_team_members,
+#     event.name AS event_name,
+#     event.address AS event_address,
+#     event.time AS event_time,
+#     event.domain AS event_domain
+# FROM 
+#     registration
+# JOIN 
+#     event ON registration.event_id = event.id;
