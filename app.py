@@ -4,7 +4,7 @@ from flask_socketio import SocketIO, join_room, leave_room, send
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://Root:yes@localhost/event'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:yes@localhost/event'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)

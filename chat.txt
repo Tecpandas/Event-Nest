@@ -1,0 +1,414 @@
+thik na haa bss query ko thode changee karna padega db connect hogya handle_join
+abi appearcance me thoda or change krke push marunga fir dekhta huu query tu bhej domainor kusun log ka kya seen h mujhe nhi patah hai muhje ab kya kar hai vho bol
+a ek sec haa ruk ye fields wala issue h na still 
+ye thoda sa kaam h i guess 10 min me ho jayega ? or am i wrong ?haa bro par mummy khqne k bhula rehi hai kab toh shaam tak kar k bheju?alrightsun or khuch kaam hai toh vho bhi bol
+kaam to bhot h batata hu aaram se filhaal ye krle or kusum log ka dekh le kya seen h thik meh tuhje update karti hu leader kk byee fir yeah 
+
+so basically i am making a web app and this is index.html "<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>EVENT-NEST</h1>
+    </header>
+    <main>
+        <h2>Events</h2>
+        <a href="{{ url_for('post_event') }}" class="btn">Post a New Event</a>
+        <div class="event-container">
+            {% for event in events %}
+            <div class="event-card">
+                <h2>{{ event.name }}</h2>
+                <p><strong>Address:</strong> {{ event.address }}</p>
+                <p><strong>Time:</strong> {{ event.time }}</p>
+                <p><strong>Domain:</strong> {{ event.domain }}</p>
+                <a href="{{ url_for('register', event_id=event.id) }}" class="btn">Register</a>
+                <a href="{{ url_for('event_detail', event_id=event.id) }}" class="btn">Go to Event</a>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>
+" and this is the css of the whole app "/* Existing styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #ffffff;
+}
+
+a {
+    text-decoration: none;
+    color: #bb86fc;
+    display: inline-block;
+    margin: 20px 0;
+}
+
+form {
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+input[type="text"],
+button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+button {
+    background-color: #bb86fc;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #985eff;
+}
+
+.event-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.event-card {
+    background-color: #1e1e1e;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    width: 300px;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+    color: #e0e0e0;
+}
+
+.event-card h2 {
+    margin-top: 0;
+    color: #ffffff;
+}
+
+.event-card p {
+    margin: 10px 0;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    color: #ffffff;
+    background-color: #bb86fc;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #985eff;
+}
+
+#chat-box {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#messages {
+    list-style-type: none;
+    padding: 0;
+    color: #ffffff;
+}
+
+#messages li {
+    padding: 10px;
+    border-bottom: 1px solid #333;
+}
+
+input#message {
+    width: calc(100% - 60px);
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+button#send {
+    padding: 10px 20px;
+    background-color: #bb86fc;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button#send:hover {
+    background-color: #985eff;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-container {
+    background-color: #1f1f1f;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-container h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.form-container p {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group-inline {
+    display: inline-block;
+    width: calc(50% - 10px);
+    vertical-align: top;
+}
+
+.form-group-inline + .form-group-inline {
+    margin-left: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group-inline input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.register-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    color: #121212;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.register-btn:hover {
+    background-color: #f0f0f0;
+}
+
+/* Additional styles for the rest of the project */
+
+.event-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.event-card {
+    background-color: #1e1e1e;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    width: 300px;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+    color: #e0e0e0;
+}
+
+.event-card h2 {
+    margin-top: 0;
+    color: #ffffff;
+}
+
+.event-card p {
+    margin: 10px 0;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    color: #ffffff;
+    background-color: #bb86fc;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #985eff;
+}
+
+#chat-box {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#messages {
+    list-style-type: none;
+    padding: 0;
+    color: #ffffff;
+}
+
+#messages li {
+    padding: 10px;
+    border-bottom: 1px solid #333;
+}
+
+input#message {
+    width: calc(100% - 60px);
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+button#send {
+    padding: 10px 20px;
+    background-color: #bb86fc;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button#send:hover {
+    background-color: #985eff;
+}
+
+/* Updated button styles */
+button {
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 7px;
+  border: 1px solid rgb(61, 106, 255);
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  background: transparent;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+button:hover {
+  background: rgb(61, 106, 255);
+  box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.815);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+button:hover::before {
+  -webkit-animation: sh02 0.5s 0s linear;
+  -moz-animation: sh02 0.5s 0s linear;
+  animation: sh02 0.5s 0s linear;
+}
+
+button::before {
+  content: '';
+  display: block;
+  width: 0px;
+  height: 86%;
+  position: absolute;
+  top: 7%;
+  left: 0%;
+  opacity: 0;
+  background: #fff;
+  box-shadow: 0 0 50px 30px #fff;
+  -webkit-transform: skewX(-20deg);
+  -moz-transform: skewX(-20deg);
+  -ms-transform: skewX(-20deg);
+  -o-transform: skewX(-20deg);
+  transform: skewX(-20deg);
+}
+
+@keyframes sh02 {
+  from {
+    opacity: 0;
+    left: 0%;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    left: 100%;
+  }
+}
+
+button:active {
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: box-shadow 0.2s ease-in;
+  -moz-transition: box-shadow 0.2s ease-in;
+  transition: box-shadow 0.2s ease-in;
+}
+" ok so know there is a event card in which it displays event name adress time and domain ok now i just want to modify the appearnce of this card like html code for the card is 

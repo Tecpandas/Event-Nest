@@ -12,7 +12,7 @@
     </header>
     <main>
         <h2>Events</h2>
-        <a href="{{ url_for('post_event') }}">Post a New Event</a>
+        <a href="{{ url_for('post_event') }}" class="btn">Post a New Event</a>
         <div class="event-container">
             {% for event in events %}
             <div class="event-card">
