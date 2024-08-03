@@ -24,6 +24,9 @@ class Registration(db.Model):
     name = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
     team_members = db.Column(db.String(500), nullable=True)
+    college_name = db.Column(db.String(100), nullable=False)
+    branch = db.Column(db.String(50), nullable=False)
+    year = db.Column(db.String(20), nullable=False)
 
 @app.route('/')
 def index():
@@ -31,7 +34,6 @@ def index():
     return render_template('index.html', events=events)
 
 @app.route('/post_event', methods=['GET', 'POST'])
-
 def post_event():
     if request.method == 'POST':
         name = request.form['name']
@@ -49,7 +51,6 @@ def post_event():
     return render_template('post_event.html')
 
 @app.route('/register/<int:event_id>', methods=['GET', 'POST'])
-
 def register(event_id):
     event = Event.query.get(event_id)
     if not event:
@@ -59,7 +60,11 @@ def register(event_id):
         name = request.form['name']
         phone = request.form['phone']
         team_members = request.form.get('team_members', '')  # Use .get to handle the case when the field is not provided
-        new_registration = Registration(event_id=event_id, name=name, phone=phone, team_members=team_members)
+        college_name = request.form['college_name']
+        branch = request.form['branch']
+        year = request.form['year']
+        new_registration = Registration(event_id=event_id, name=name, phone=phone, team_members=team_members,
+                                        college_name=college_name, branch=branch, year=year)
         db.session.add(new_registration)
         try:
             db.session.commit()
@@ -68,7 +73,6 @@ def register(event_id):
             return str(e), 500
         return redirect(url_for('event_detail', event_id=event_id))
     return render_template('register.html', event_id=event_id)
-
 
 @app.route('/event/<int:event_id>')
 def event_detail(event_id):
@@ -97,3 +101,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     socketio.run(app, debug=True)
+
