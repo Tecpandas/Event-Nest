@@ -7,10 +7,44 @@ body {
     color: #e0e0e0;
 }
 
-h1 {
-    text-align: center;
-    margin-top: 20px;
+h1.event-nest-heading {
+    font-family: 'Merriweather', serif;
     color: #ffffff;
+    font-size: 36px;
+    font-weight: 700;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+header {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 50px;
+}
+
+.top-right-buttons {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.top-right-buttons .btn {
+    padding: 10px 20px;
+    background-color: #bb86fc;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.top-right-buttons .btn:hover {
+    background-color: #985eff;
 }
 
 a {
@@ -18,6 +52,44 @@ a {
     color: #bb86fc;
     display: inline-block;
     margin: 20px 0;
+}
+
+.event-details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.event-details-box, .registrations-box {
+    background-color: #1e1e1e;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 80%;
+    max-width: 800px;
+}
+
+.registrations-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.registrations-table th, .registrations-table td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: left;
+}
+
+.registrations-table th {
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+.registrations-table tbody tr:nth-child(even) {
+    background-color: #2a2a2a;
 }
 
 form {
@@ -289,15 +361,16 @@ button:active {
 }
 
 /* Additional styles for header buttons */
-.top-right-buttons {
+.top-left-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.top-right-button {
     position: absolute;
     top: 20px;
     right: 20px;
-}
-
-.top-right-buttons .btn {
-    display: inline-block;
-    margin-left: 10px;
 }
 
 /* Ensure the header has relative positioning for absolute positioning of buttons */

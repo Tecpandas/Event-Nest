@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event List</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>EVENT-NEST</h1>
+        <h1 class="event-nest-heading">EVENT-NEST</h1>
         <div class="top-right-buttons">
             <a href="{{ url_for('post_event') }}" class="btn">Post a New Event</a>
             <a href="{{ url_for('post_event') }}" class="btn">Sign Up</a>
         </div>
     </header>
     <main>
-        <h2>Events</h2>
+        <h2>  </h2>
         <div class="event-container">
             {% for event in events %}
             <div class="event-card">
