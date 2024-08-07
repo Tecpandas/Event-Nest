@@ -14,7 +14,9 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     address = db.Column(db.String(200), nullable=False)
+    date = db.Column(db.String(10), nullable=False)
     time = db.Column(db.String(50), nullable=False)
+    phone = db.Column(db.String(20), nullable=False)
     domain = db.Column(db.String(100), nullable=False)
     registrations = db.relationship('Registration', backref='event', lazy=True)
 
@@ -38,9 +40,11 @@ def post_event():
     if request.method == 'POST':
         name = request.form['name']
         address = request.form['address']
+        date = request.form['date']
         time = request.form['time']
+        phone = request.form['phone']
         domain = request.form['domain']
-        new_event = Event(name=name, address=address, time=time, domain=domain)
+        new_event = Event(name=name, address=address, date=date, time=time, phone=phone, domain=domain)
         db.session.add(new_event)
         try:
             db.session.commit()
@@ -101,4 +105,3 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     socketio.run(app, debug=True)
-

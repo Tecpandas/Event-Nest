@@ -24,6 +24,7 @@
                 <p><strong>Address:</strong> {{ event.address }}</p>
                 <p><strong>Time:</strong> {{ event.time }}</p>
                 <p><strong>Domain:</strong> {{ event.domain }}</p>
+                <p><strong>Date:</strong> {{ event.date }}</p>
                 <a href="{{ url_for('register', event_id=event.id) }}" class="btn">Register</a>
                 <a href="{{ url_for('event_detail', event_id=event.id) }}" class="btn">Go to Event</a>
             </div>
