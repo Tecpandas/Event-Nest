@@ -1,9 +1,10 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #121212;
-    color: #e0e0e0;
+    background-image: url('{{ url_for('static', filename='bg-2.jpg') }}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
 }
 
 h1 {
