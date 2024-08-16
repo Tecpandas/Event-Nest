@@ -7,17 +7,40 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>{{ event.name }}</h1>
-    <p><strong>Address:</strong> {{ event.address }}</p>
-    <p><strong>Time:</strong> {{ event.time }}</p>
-    <p><strong>Domain:</strong> {{ event.domain }}</p>
-    <h2>Registrations</h2>
-    <ul>
-        {% for registration in registrations %}
-        <li>{{ registration.name }}{% if registration.team_members %} (Team Members: {{ registration.team_members }}){% endif %}</li>
-        {% endfor %}
-    </ul>
-    <a href="{{ url_for('index') }}">Back to Events</a>
-    <a href="{{ url_for('chat', event_id=event.id) }}" class="btn">Go to Chat Room</a>
+    <header>
+        <div class="top-left-button">
+            <a href="{{ url_for('index') }}" class="btn">Back to Events</a>
+        </div>
+        <div class="top-right-button">
+            <a href="{{ url_for('chat', event_id=event.id) }}" class="btn">Go to Chat Room</a>
+        </div>
+    </header>
+    <div class="event-details-container">
+        <div class="event-details-box">
+            <h1>{{ event.name }}</h1>
+            <p><strong>Address:</strong> {{ event.address }}</p>
+            <p><strong>Time:</strong> {{ event.time }}</p>
+            <p><strong>Domain:</strong> {{ event.domain }}</p>
+        </div>
+        <div class="registrations-box">
+            <h2>Registrations</h2>
+            <table class="registrations-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>College Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for registration in registrations %}
+                    <tr>
+                        <td>{{ registration.name }}</td>
+                        <td>{{ registration.college_name if registration.college_name else 'N/A' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

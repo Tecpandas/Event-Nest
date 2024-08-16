@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event List</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
@@ -76,14 +77,21 @@
 
         /* Additional styles for the rest of the project */
     </style>
+=======
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+>>>>>>> 38555a6eb43b674a4f3679fed755392e6279022c
 </head>
 <body>
     <header>
-        <h1>EVENT-NEST</h1>
+        <h1 class="event-nest-heading">EVENT-NEST</h1>
+        <div class="top-right-buttons">
+            <a href="{{ url_for('post_event') }}" class="btn">Post a New Event</a>
+            <a href="{{ url_for('login') }}" class="btn">Sign Up</a>
+        </div>
     </header>
     <main>
-        <h2>Events</h2>
-        <a href="{{ url_for('post_event') }}">Post a New Event</a>
+        <h2>  </h2>
         <div class="event-container">
             {% for event in events %}
             <div class="event-card">
@@ -112,6 +120,7 @@
                 <p><strong>Address:</strong> {{ event.address }}</p>
                 <p><strong>Time:</strong> {{ event.time }}</p>
                 <p><strong>Domain:</strong> {{ event.domain }}</p>
+                <p><strong>Date:</strong> {{ event.date }}</p>
                 <a href="{{ url_for('register', event_id=event.id) }}" class="btn">Register</a>
                 <a href="{{ url_for('event_detail', event_id=event.id) }}" class="btn">Go to Event</a>
             </div>
