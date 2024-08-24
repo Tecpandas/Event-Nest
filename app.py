@@ -9,7 +9,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:yes@localho
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)  # Initialize Bcrypt
+bcrypt = Bcrypt(app)
 socketio = SocketIO(app)
 
 class User(db.Model):
@@ -84,7 +84,7 @@ def register(event_id):
             db.session.rollback()
             return str(e), 500
         return redirect(url_for('event_detail', event_id=event_id))
-    return render_template('register.html', event_id=event_id)
+    return render_template('register.html', event=event)
 
 @app.route('/event/<int:event_id>')
 def event_detail(event_id):
@@ -144,5 +144,5 @@ def sign_up():
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
+        db.create_all()  # Ensure the tables are created
     socketio.run(app, debug=True)

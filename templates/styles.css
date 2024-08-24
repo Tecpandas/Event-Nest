@@ -3,25 +3,25 @@
 }
 
 body {
-	background: #FFFFFF; /* White Background */
+	background: #FFFFFF;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	font-family: 'Montserrat', sans-serif;
 	height: 100vh;
 	margin: 0;
-	color: #FFFFFF; /* Black Text */
+	color: #FFFFFF;
 }
 
 h1 {
 	font-weight: bold;
 	margin: 0;
-	color: #FFFFFF; /* Black Text */
+	color: #FFFFFF;
 }
 
 h2 {
 	text-align: center;
-	color: #FFFFFF; /* Black Text */
+	color: #FFFFFF;
 }
 
 p {
@@ -30,16 +30,16 @@ p {
 	line-height: 20px;
 	letter-spacing: 0.5px;
 	margin: 20px 0 30px;
-	color: #FFFFFF; /* Black Text */
+	color: #FFFFFF;
 }
 
 span {
 	font-size: 12px;
-	color: #FFFFFF; /* Black Text */
+	color: #FFFFFF;
 }
 
 a {
-	color: #FFFFFF; /* Black Text */
+	color: #FFFFFF;
 	font-size: 14px;
 	text-decoration: none;
 	margin: 15px 0;
@@ -47,9 +47,9 @@ a {
 
 button {
 	border-radius: 20px;
-	border: 1px solid #e3d5d5; /* Black Border */
-	background-color: #dccaca; /* Black Background */
-	color: #000000; /* White Text */
+	border: 1px solid #e3d5d5;
+	background-color: #dccaca;
+	color: #000000;
 	font-size: 12px;
 	font-weight: bold;
 	padding: 12px 45px;
@@ -60,13 +60,13 @@ button {
 
 button.ghost {
 	background-color: transparent;
-	border-color: #d7c0c0; /* Black Border */
-	color: #FFFFFF; /* Black Text */
+	border-color: #d7c0c0;
+	color: #FFFFFF;
 }
 
 form {
-	background-color: #181515; /* Black Background */
-	color: #FFFFFF; /* White Text */
+	background-color: #181515;
+	color: #FFFFFF;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -83,11 +83,11 @@ input {
 	padding: 12px 15px;
 	margin: 8px 0;
 	width: 100%;
-	color: #FFFFFF; /* Black Text */
+	color: #090101;
 }
 
 .container {
-	background-color: #FFFFFF; /* White Background */
+	background-color: #FFFFFF;
 	border-radius: 10px;
 	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
 			0 10px 10px rgba(0,0,0,0.22);
@@ -96,7 +96,7 @@ input {
 	max-width: 100%;
 	min-height: 100vh;
 	overflow: hidden;
-	color: #FFFFFF; /* Black Text */
+	color: #FFFFFF;
 }
 
 .form-container {
@@ -162,13 +162,13 @@ input {
 }
 
 .overlay {
-	background: #000000; /* Black Background */
+	background: #000000;
 	background: -webkit-linear-gradient(to right, #000000, #90629b);
 	background: linear-gradient(to right, #000000,#90629b);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
-	color: #FFFFFF; /* White Text */
+	color: #FFFFFF;
 	position: relative;
 	left: -100%;
 	height: 100%;
@@ -218,7 +218,7 @@ input {
 }
 
 .social-container a {
-	border: 1px solid #FFFFFF; /* Black Border */
+	border: 1px solid #FFFFFF;
 	border-radius: 50%;
 	display: inline-flex;
 	justify-content: center;
@@ -226,12 +226,12 @@ input {
 	margin: 0 5px;
 	height: 40px;
 	width: 40px;
-	color: #FFFFFF; /* Black Text */
+	color: #FFFFFF;
 }
 
 footer {
-	background-color: #FFFFFF; /* Black Background */
-	color: #FFFFFF; /* White Text */
+	background-color: #FFFFFF;
+	color: #FFFFFF;
 	font-size: 14px;
 	bottom: 0;
 	position: fixed;
@@ -250,6 +250,6 @@ footer i {
 }
 
 footer a {
-	color: #FFFFFF; /* White Text */
+	color: #FFFFFF;
 	text-decoration: none;
 }

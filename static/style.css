@@ -1,19 +1,11 @@
 /* Existing styles */
+/* General Styles */
 body {
-<<<<<<< HEAD
-    font-family: Arial, sans-serif;
-    background-image: url('{{ url_for('static', filename='bg-2.jpg') }}');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    color: white;
-=======
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #121212;
   color: #e0e0e0;
->>>>>>> 38555a6eb43b674a4f3679fed755392e6279022c
 }
 
 h1.event-nest-heading {
@@ -214,7 +206,6 @@ button:hover {
   color: #111;
 }
 
-
 #chat-box {
   width: 100%;
   max-width: 600px;
@@ -377,103 +368,102 @@ button#send:hover {
   transition: box-shadow 0.2s ease-in;
 }
 
-
 /* Updated button styles */
 button {
-position: relative;
-padding: 10px 20px;
-border: none;
-background: #333;
-color: #fff;
-font-size: 16px;
-font-weight: 600;
-text-transform: uppercase;
-overflow: hidden;
-transition: 0.5s;
-z-index: 1;
+  position: relative;
+  padding: 10px 20px;
+  border: none;
+  background: #333;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: 0.5s;
+  z-index: 1;
 }
 
 button:hover {
-background: #000;
-cursor: pointer;
+  background: #000;
+  cursor: pointer;
 }
 
 button span {
-position: absolute;
-display: block;
+  position: absolute;
+  display: block;
 }
 
 button span:nth-child(1) {
-top: 0;
-left: -100%;
-width: 100%;
-height: 3px;
-background: linear-gradient(90deg, transparent, #ff0057);
-animation: animate1 1s linear infinite;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #ff0057);
+  animation: animate1 1s linear infinite;
 }
 
 @keyframes animate1 {
-0% {
-  left: -100%;
-}
-50%,100% {
-  left: 100%;
-}
+  0% {
+    left: -100%;
+  }
+  50%, 100% {
+    left: 100%;
+  }
 }
 
 button span:nth-child(2) {
-top: -100%;
-right: 0;
-width: 3px;
-height: 100%;
-background: linear-gradient(180deg, transparent, #ff0057);
-animation: animate2 1s linear infinite;
-animation-delay: 0.25s;
+  top: -100%;
+  right: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, #ff0057);
+  animation: animate2 1s linear infinite;
+  animation-delay: 0.25s;
 }
 
 @keyframes animate2 {
-0% {
-  top: -100%;
-}
-50%,100% {
-  top: 100%;
-}
+  0% {
+    top: -100%;
+  }
+  50%, 100% {
+    top: 100%;
+  }
 }
 
 button span:nth-child(3) {
-bottom: 0;
-right: -100%;
-width: 100%;
-height: 3px;
-background: linear-gradient(270deg, transparent, #ff0057);
-animation: animate3 1s linear infinite;
-animation-delay: 0.5s;
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(270deg, transparent, #ff0057);
+  animation: animate3 1s linear infinite;
+  animation-delay: 0.5s;
 }
 
 @keyframes animate3 {
-0% {
-  right: -100%;
-}
-50%,100% {
-  right: 100%;
-}
+  0% {
+    right: -100%;
+  }
+  50%, 100% {
+    right: 100%;
+  }
 }
 
 button span:nth-child(4) {
-bottom: -100%;
-left: 0;
-width: 3px;
-height: 100%;
-background: linear-gradient(360deg, transparent, #ff0057);
-animation: animate4 1s linear infinite;
-animation-delay: 0.75s;
+  bottom: -100%;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(360deg, transparent, #ff0057);
+  animation: animate4 1s linear infinite;
+  animation-delay: 0.75s;
 }
 
 @keyframes animate4 {
-0% {
-  bottom: -100%;
-}
-50%,100% {
-  bottom: 100%;
-}
+  0% {
+    bottom: -100%;
+  }
+  50%, 100% {
+    bottom: 100%;
+  }
 }
