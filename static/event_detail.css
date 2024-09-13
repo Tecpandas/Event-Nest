@@ -1,0 +1,142 @@
+/* event_detail.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+a {
+  text-decoration: none;
+  color: #bb86fc;
+  display: inline-block;
+  margin: 20px 0;
+}
+
+.event-details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.event-details-box, .registrations-box {
+  background-color: #1e1e1e;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 80%;
+  max-width: 800px;
+}
+  
+  .registrations-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .registrations-table th, .registrations-table td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .registrations-table th {
+    background-color: #2a2a2a;
+    color: #ffffff;
+  }
+  
+  .registrations-table tbody tr:nth-child(even) {
+    background-color: #2a2a2a;
+  }
+  
+  /* Button Styles from Uiverse.io */
+/* Positioning buttons at the top left and right corners */
+.top-left-button,
+.top-right-button {
+  position: absolute;
+  top: 20px;
+}
+
+.top-left-button {
+  left: 20px;
+}
+
+.top-right-button {
+  right: 20px;
+}
+
+/* Smaller Button with Reduced Width */
+.custom-button {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem; /* Minimized gap between text and icon */
+  text-align: center;
+  padding: 1rem 1.5rem; /* Reduced padding to decrease width */
+  margin: 0;
+  font-size: 1rem; /* Smaller font size */
+  font-weight: 600;
+  color: #000;
+  background-color: #f9fafb;
+  border: 2px solid #f9fafb;
+  border-radius: 9999px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+  width: auto;
+  max-width: fit-content;
+}
+
+.custom-button::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: -100%;
+  background-color: #10b981;
+  transition: all 0.7s ease-in-out;
+  border-radius: 9999px;
+  z-index: -1;
+}
+
+.custom-button:hover::before {
+  left: 0;
+}
+
+.custom-button:hover {
+  color: #f9fafb;
+}
+
+.custom-button-icon {
+  width: 0.75rem; /* Reduced icon size */
+  height: 0.75rem; /* Reduced icon size */
+  transition: all 0.3s ease-in-out;
+  transform: rotate(45deg);
+  background-color: transparent;
+  border-radius: 50%;
+  padding: 0.1rem; /* Reduced padding inside the icon */
+  border: 1px solid #333;
+}
+
+.custom-button:hover .custom-button-icon {
+  transform: rotate(90deg);
+  background-color: #f9fafb;
+  border: none;
+}
+
+.custom-button-icon path {
+  fill: #333;
+}
+
+.custom-button:hover .custom-button-icon path {
+  fill: #333;
+}

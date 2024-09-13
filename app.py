@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, join_room, leave_room, send
 from flask_bcrypt import Bcrypt
+import mysql.connector
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -9,7 +10,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:yes@localho
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)  # Initialize Bcrypt
+bcrypt = Bcrypt(app)
 socketio = SocketIO(app)
 
 class User(db.Model):
@@ -37,6 +38,9 @@ class Registration(db.Model):
     college_name = db.Column(db.String(100), nullable=False)
     branch = db.Column(db.String(50), nullable=False)
     year = db.Column(db.String(20), nullable=False)
+
+# Dictionary to keep track of online users per room
+online_users = {}
 
 @app.route('/')
 def index():
@@ -96,14 +100,43 @@ def event_detail(event_id):
 def chat(event_id):
     event = Event.query.get_or_404(event_id)
     registrations = Registration.query.filter_by(event_id=event_id).all()
-    return render_template('chat.html', event=event, registrations=registrations)
+    
+    # Separate online and offline users
+    room = str(event_id)
+    online_users_list = online_users.get(room, [])
+    online_usernames = [user['username'] for user in online_users_list]
+    offline_users = [registration for registration in registrations if registration.name not in online_usernames]
+
+    return render_template('chat.html', event=event, registrations=registrations, 
+                           online_users=online_users_list, offline_users=offline_users,
+                           online_users_count=len(online_users_list), offline_users_count=len(offline_users))
 
 @socketio.on('join')
 def handle_join(data):
     username = data['username']
-    room = data['room']
+    room = str(data['room'])
+    
     join_room(room)
+    if room not in online_users:
+        online_users[room] = []
+    online_users[room].append({'username': username})
+    
     send(f'{username} has joined the room.', room=room)
+    socketio.emit('user_update', {'online_users': online_users[room]}, room=room)
+
+@socketio.on('leave')
+def handle_leave(data):
+    username = data['username']
+    room = str(data['room'])
+    
+    leave_room(room)
+    if room in online_users:
+        online_users[room] = [user for user in online_users[room] if user['username'] != username]
+        if not online_users[room]:
+            del online_users[room]
+    
+    send(f'{username} has left the room.', room=room)
+    socketio.emit('user_update', {'online_users': online_users.get(room, [])}, room=room)
 
 @socketio.on('message')
 def handle_message(data):
@@ -141,6 +174,32 @@ def sign_up():
             return str(e), 500
         return redirect(url_for('login'))
     return render_template('signup.html')
+
+def get_db_connection():
+    connection = mysql.connector.connect(
+        host="localhost",
+        user="Root",
+        password="yes",
+        database="event"
+    )
+    return connection
+
+@app.route('/profile')
+def profile():
+    # Sample data (replace with your database query)
+    user = {
+        "name": "Prem Mishra",
+        "email": "try.prem@gmail.com",
+        "upcoming_events": [
+            {"title": "Box Cricket", "date": "August 15-17, 2023", "location": "Theem Coe, CA"},
+            {"title": "Badminton", "date": "October 5-7, 2023", "location": "Main Ground, NY"},
+        ],
+        "past_events": [
+            {"title": "Blind Coding", "date": "November 10-12, 2022", "location": "Web lab, IL"},
+            {"title": "Pubg", "date": "November 10-12, 2022", "location": "Old building, IL"},
+        ],
+    }
+    return render_template('profile.html', user=user)
 
 if __name__ == '__main__':
     with app.app_context():

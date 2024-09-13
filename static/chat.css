@@ -1,0 +1,162 @@
+/* General styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #070707;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Container for chat elements */
+.chat-container {
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header styling */
+header {
+  background-color: #2c2c2c;
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  border-bottom: 1px solid #333333;
+}
+
+.online-status {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Chat layout */
+.chat-wrapper {
+  display: flex;
+  flex-grow: 1;
+}
+
+/* User list styling */
+.user-list {
+  width: 30%;
+  background-color: #151515;
+  padding: 20px;
+  border-right: 1px solid #333333;
+  overflow-y: auto;
+}
+
+.user-list h3 {
+  margin-top: 0;
+}
+
+.user-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #333333;
+  display: flex;
+  align-items: center;
+}
+
+/* .user-list li::before {
+  content: url('https://www.freeiconspng.com/uploads/am-a-19-year-old-multimedia-artist-student-from-manila--21.png');
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+} */
+
+/* Chat box styling */
+.chat-box {
+  width: 70%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #1a1a1a;
+}
+
+.messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  border: 1px solid #333333;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #0e0e0e;
+  color: #ffffff;
+}
+
+/* Message input styling */
+#chat-form {
+  display: flex;
+  align-items: center;
+}
+
+#message-input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #333333;
+  border-radius: 5px 0 0 5px;
+  font-size: 16px;
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+#chat-form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+#chat-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #444444;
+  border-radius: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .chat-wrapper {
+    flex-direction: column;
+  }
+
+  .user-list,
+  .chat-box {
+    width: 100%;
+    height: 50vh;
+  }
+
+  .messages {
+    height: 100%;
+  }
+}

@@ -1,0 +1,134 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    background-color: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Starry Background */
+#starry-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('{{ url_for('static', filename='starry-background.jpg') }}') no-repeat center center/cover;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+h1.event-nest-heading {
+    font-family: 'Roboto', sans-serif;
+    color: #bb86fc;
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Login Container */
+.login-container {
+    background-color: rgba(36, 36, 36, 0.9);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    width: 400px;
+    max-width: 90%;
+    text-align: center;
+}
+
+.login-container h2 {
+    color: #ffffff;
+    margin-bottom: 30px;
+    font-size: 32px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    color: #bb86fc;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: #242424;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.input-group input:focus {
+    outline: none;
+    background-color: #333333;
+}
+
+.btn {
+    padding: 15px 30px;
+    background-color: #bb86fc;
+    border: none;
+    border-radius: 10px;
+    color: #242424;
+    font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #a676e3;
+}
+
+p {
+    margin-top: 20px;
+    color: #bb86fc;
+}
+
+.sign-up-link {
+    color: #bb86fc;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.sign-up-link:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+    .login-container {
+        padding: 20px;
+    }
+
+    h1.event-nest-heading {
+        font-size: 36px;
+    }
+
+    .login-container h2 {
+        font-size: 28px;
+    }
+
+    .btn {
+        font-size: 16px;
+    }
+}

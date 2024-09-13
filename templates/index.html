@@ -1,33 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event List</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Event List</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    
 <body>
     <header>
-        <h1 class="event-nest-heading">EVENT-NEST</h1>
-        <div class="top-right-buttons">
-            <a href="{{ url_for('post_event') }}" class="btn">Post a New Event</a>
-            <a href="{{ url_for('login') }}" class="btn">Sign Up</a>
+        <div class="header-left">
+            <div class="user-profile">
+                <a href="{{ url_for('profile') }}" class="user-profile-link">
+                    <img src="{{ url_for('static', filename='user-icon.png') }}" alt="User Icon" class="user-icon">
+                    <span class="username">{{ username }}</span>
+                </a>
+            </div>
+            <h1 class="event-nest-heading">EVENT-NEST</h1>
+        </div>
+
+        <div class="header-right">
+            <!-- Advanced Search Bar -->
+            <div class="search-bar">
+                <input type="text" placeholder="Search events..." class="search-input">
+                <button class="search-btn">
+                    <img src="{{ url_for('static', filename='Search-icon.png') }}" alt="Search Icon">
+                </button>
+            </div>
+
+            <div class="top-right-buttons">
+                <a href="{{ url_for('post_event') }}" class="btn">Post a New Event</a>
+                <a href="{{ url_for('sign_up') }}" class="btn">Sign Up</a>
+            </div>
         </div>
     </header>
+
+    <!-- White line between header and event cards -->
+    <hr class="header-divider">
+
     <main>
-        <h2>  </h2>
         <div class="event-container">
             {% for event in events %}
-            <div class="event-card">
-                <h2>{{ event.name }}</h2>
-                <p><strong>Address:</strong> {{ event.address }}</p>
-                <p><strong>Time:</strong> {{ event.time }}</p>
-                <p><strong>Domain:</strong> {{ event.domain }}</p>
-                <p><strong>Date:</strong> {{ event.date }}</p>
-                <a href="{{ url_for('register', event_id=event.id) }}" class="btn">Register</a>
-                <a href="{{ url_for('event_detail', event_id=event.id) }}" class="btn">Go to Event</a>
-            </div>
+                <div class="event-card">
+                    <h2>{{ event.name }}</h2>
+                    <p><strong>Address:</strong> {{ event.address }}</p>
+                    <p><strong>Time:</strong> {{ event.time }}</p>
+                    <p><strong>Domain:</strong> {{ event.domain }}</p>
+                    <p><strong>Date:</strong> {{ event.date }}</p>
+                    <div class="card-buttons">
+                        <a href="{{ url_for('register', event_id=event.id) }}" class="btn register-btn">Register</a>
+                        <a href="{{ url_for('event_detail', event_id=event.id) }}" class="btn go-to-event-btn">Go to Event</a>
+                    </div>
+                </div>
             {% endfor %}
         </div>
     </main>

@@ -3,31 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Room for {{ event.name }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Chat Room</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>Chat Room for {{ event.name }}</h1>
-    <div id="chat-box">
-        <ul id="messages"></ul>
+    <div class="chat-container">
+        <header>
+            <h1>{{ event.name }} - Chat Room</h1>
+            <div class="online-status">
+                <span>Online: <span id="online-count">{{ online_users_count }}</span></span>
+            </div>
+        </header>
+        <div class="chat-wrapper">
+            <div class="user-list">
+                <h3>Online Users ({{ online_users_count }}):</h3>
+                <ul id="online-users">
+                    {% for user in online_users %}
+                        <li>{{ user.username }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h3>Offline Users ({{ offline_users_count }}):</h3>
+                <ul id="offline-users">
+                    {% for user in offline_users %}
+                        <li>{{ user.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="chat-box">
+                <div id="messages" class="messages"></div>
+                <form id="chat-form">
+                    <input type="text" id="message-input" autocomplete="off" placeholder="Type a message..." required>
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </div>
     </div>
-    <input id="message" autocomplete="off" /><button id="send">Send</button>
     <script>
-        var socket = io();
-        var room = "{{ event.id }}";
-        var username = prompt("Enter your name");
+        const socket = io.connect();
 
-        socket.emit('join', {username: username, room: room});
+        socket.emit('join', {username: "{{ session.get('username') }}", room: {{ event.id }} });
 
-        socket.on('message', function(msg){
-            $('#messages').append($('<li>').text(msg));
+        document.getElementById('chat-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const message = document.getElementById('message-input').value;
+            socket.emit('message', { room: {{ event.id }}, message: message });
+            document.getElementById('message-input').value = '';
         });
 
-        $('#send').click(function(){
-            socket.emit('message', {message: $('#message').val(), room: room});
-            $('#message').val('');
+        socket.on('message', function(data) {
+            const messages = document.getElementById('messages');
+            const messageElement = document.createElement('div');
+            messageElement.textContent = data;
+            messages.appendChild(messageElement);
+            messages.scrollTop = messages.scrollHeight;
+        });
+
+        socket.on('user_update', function(data) {
+            const onlineUsers = document.getElementById('online-users');
+            const offlineUsers = document.getElementById('offline-users');
+            onlineUsers.innerHTML = '';
+            offlineUsers.innerHTML = '';
+
+            data.online_users.forEach(user => {
+                const userElement = document.createElement('li');
+                userElement.textContent = user.username;
+                onlineUsers.appendChild(userElement);
+            });
+
+            data.offline_users.forEach(user => {
+                const userElement = document.createElement('li');
+                userElement.textContent = user.name;
+                offlineUsers.appendChild(userElement);
+            });
+
+            document.getElementById('online-count').textContent = data.online_users.length;
         });
     </script>
 </body>

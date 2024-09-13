@@ -1,1 +1,7 @@
 this is kusum jha
+hr.header-divider {
+  border: none;
+  height: 2px;
+  background-color: #ffffff;
+  margin: 0;
+}

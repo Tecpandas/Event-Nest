@@ -1,0 +1,143 @@
+/* index.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+h1.event-nest-heading {
+  font-family: 'Merriweather', serif;
+  color: #ffffff;
+  font-size: 36px;
+  font-weight: 700;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+header {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 50px;
+}
+
+.user-profile {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+}
+
+.user-profile .user-icon {
+  width: 40px; /* Adjust the size of the icon if needed */
+  height: 40px; /* Adjust the size of the icon if needed */
+  border-radius: 50%; /* Optional: if you want a circular icon */
+}
+
+.user-profile .username {
+  margin-left: 10px; /* Space between the icon and username */
+  color: #ffffff; /* Adjust color if necessary */
+}
+
+.top-right-buttons {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.top-right-buttons .btn {
+  padding: 10px 20px;
+  background-color: #bb86fc;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.top-right-buttons .btn:hover {
+  background-color: #985eff;
+}
+
+.event-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  padding: 20px;
+}
+
+/* Event Card */
+.event-card {
+  background-color: #1e1e1e;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  width: 300px;
+  margin: 20px;
+  padding: 20px;
+  text-align: left;
+  color: #e0e0e0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.event-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+}
+
+.event-card h2 {
+  margin-top: 0;
+  color: #ffffff;
+}
+
+.event-card p {
+  margin: 10px 0;
+}
+
+.event-card .date-time {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.btn {
+  padding: 0.8em 1.0em;
+  border: 2px solid #764aac;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+  transition: 0.3s;
+  z-index: 1;
+  font-family: inherit;
+  color: #a165d2;
+}
+
+.btn::before {
+  content: '';
+  width: 0;
+  height: 300%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: #945bd2;
+  transition: 0.5s ease;
+  display: block;
+  z-index: -1;
+}
+
+.btn:hover::before {
+  width: 105%;
+}
+
+.btn:hover {
+  color: #111;
+}

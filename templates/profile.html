@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="user-info">
+                <img src="{{ url_for('static', filename='See.jpeg') }}" alt="User Icon" class="user-icon">
+                <h2>{{ user.name }}</h2>
+                <p>{{ user.email }}</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Appearance</a></li>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Feedback</a></li>
+                    <li><a href="#">Logout</a></li>
+                    <li><a href="#">Edit Profile</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="profile-header">
+                <h1>Profile</h1>
+                <button class="edit-btn">Edit Profile</button>
+            </div>
+            <section class="events">
+                <h2>Upcoming Events</h2>
+                <div class="event-cards">
+                    <!-- Event Cards will be dynamically generated here -->
+                    {% for event in user.upcoming_events %}
+                    <div class="event-card">
+                        <h3>{{ event.title }}</h3>
+                        <p>{{ event.date }} | {{ event.location }}</p>
+                        <button>Manage Event</button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <section class="events past-events">
+                <h2>Past Events</h2>
+                <div class="event-cards">
+                    <!-- Event Cards will be dynamically generated here -->
+                    {% for event in user.past_events %}
+                    <div class="event-card">
+                        <h3>{{ event.title }}</h3>
+                        <p>{{ event.date }} | {{ event.location }}</p>
+                        <button>Manage Event</button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

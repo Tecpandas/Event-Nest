@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+    color: #E0E0E0;
+}
+
+body {
+    background-color: #121212;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #181818;
+    padding: 20px;
+}
+
+.user-info {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.user-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #333;
+    margin-bottom: 10px;
+}
+
+.user-info h2 {
+    font-size: 20px;
+}
+
+.user-info p {
+    font-size: 14px;
+    color: #b3b3b3;
+}
+
+.sidebar nav ul {
+    list-style-type: none;
+}
+
+.sidebar nav ul li {
+    margin: 20px 0;
+}
+
+.sidebar nav ul li a {
+    text-decoration: none;
+    color: #b3b3b3;
+    font-size: 16px;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: #202020;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.profile-header h1 {
+    font-size: 28px;
+}
+
+.edit-btn {
+    background-color: #333;
+    color: #E0E0E0;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.edit-btn:hover {
+    background-color: #444;
+}
+
+.events {
+    margin-bottom: 40px;
+}
+
+.events h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.event-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.event-card {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.event-card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.event-card p {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.event-card button {
+    background-color: #333;
+    color: #E0E0E0;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.event-card button:hover {
+    background-color: #444;
+}

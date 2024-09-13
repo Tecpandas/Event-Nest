@@ -4,16 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ event.name }} Details</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='event_detail.css') }}">
 </head>
 <body>
     <header>
         <div class="top-left-button">
-            <a href="{{ url_for('index') }}" class="btn">Back to Events</a>
-        </div>
-        <div class="top-right-button">
-            <a href="{{ url_for('chat', event_id=event.id) }}" class="btn">Go to Chat Room</a>
-        </div>
+            <button class="custom-button">
+              Explore
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 19"
+                class="custom-button-icon"
+              >
+                <path
+                  d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="top-right-button">
+            <button class="custom-button">
+              Chatroom
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 19"
+                class="custom-button-icon"
+              >
+                <path
+                  d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          
+        
     </header>
     <div class="event-details-container">
         <div class="event-details-box">
