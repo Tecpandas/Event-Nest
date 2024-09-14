@@ -4,82 +4,164 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Room</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
-    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .chat-container {
+            display: flex;
+            height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .participants {
+            width: 25%;
+            background-color: #2d3436;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .participants h2 {
+            margin-top: 0;
+        }
+        .participants ul {
+            list-style: none;
+            padding: 0;
+        }
+        .participants ul li {
+            margin-bottom: 15px;
+        }
+        .chat-area {
+            width: 75%;
+            display: flex;
+            flex-direction: column;
+        }
+        .message-box {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #dfe6e9;
+        }
+        .message-box p {
+            padding: 10px;
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .message-box p span {
+            font-weight: bold;
+        }
+        .message-form {
+            display: flex;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-top: 1px solid #ddd;
+        }
+        .message-form input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .message-form button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #0984e3;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .message-form button:hover {
+            background-color: #74b9ff;
+        }
+    </style>
 </head>
 <body>
-    <div class="chat-container">
-        <header>
-            <h1>{{ event.name }} - Chat Room</h1>
-            <div class="online-status">
-                <span>Online: <span id="online-count">{{ online_users_count }}</span></span>
-            </div>
-        </header>
-        <div class="chat-wrapper">
-            <div class="user-list">
-                <h3>Online Users ({{ online_users_count }}):</h3>
-                <ul id="online-users">
-                    {% for user in online_users %}
-                        <li>{{ user.username }}</li>
-                    {% endfor %}
-                </ul>
 
-                <h3>Offline Users ({{ offline_users_count }}):</h3>
-                <ul id="offline-users">
-                    {% for user in offline_users %}
-                        <li>{{ user.name }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="chat-box">
-                <div id="messages" class="messages"></div>
-                <form id="chat-form">
-                    <input type="text" id="message-input" autocomplete="off" placeholder="Type a message..." required>
-                    <button type="submit">Send</button>
-                </form>
-            </div>
-        </div>
+<div class="chat-container">
+    <!-- Participants List -->
+    <div class="participants">
+        <h2>Participants</h2>
+        <ul id="participants-list">
+            <!-- Participants will be dynamically added here -->
+        </ul>
     </div>
-    <script>
-        const socket = io.connect();
 
-        socket.emit('join', {username: "{{ session.get('username') }}", room: {{ event.id }} });
+    <!-- Chat Area -->
+    <div class="chat-area">
+        <div class="message-box" id="message-box">
+            <!-- Messages will be displayed here -->
+        </div>
+        <form id="message-form" class="message-form">
+            <input type="text" id="message-input" placeholder="Enter your message" autocomplete="off">
+            <button type="submit"><i class="fas fa-paper-plane"></i> Send</button>
+        </form>
+    </div>
+</div>
 
-        document.getElementById('chat-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const message = document.getElementById('message-input').value;
-            socket.emit('message', { room: {{ event.id }}, message: message });
-            document.getElementById('message-input').value = '';
-        });
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+<script>
+    const socket = io();
+    const messageBox = document.getElementById('message-box');
+    const messageInput = document.getElementById('message-input');
+    const messageForm = document.getElementById('message-form');
+    const participantsList = document.getElementById('participants-list');
 
-        socket.on('message', function(data) {
-            const messages = document.getElementById('messages');
-            const messageElement = document.createElement('div');
-            messageElement.textContent = data;
-            messages.appendChild(messageElement);
-            messages.scrollTop = messages.scrollHeight;
-        });
+    const username = "{{ username }}"; // From backend
+    const eventId = "{{ event.id }}"; // From backend
 
-        socket.on('user_update', function(data) {
-            const onlineUsers = document.getElementById('online-users');
-            const offlineUsers = document.getElementById('offline-users');
-            onlineUsers.innerHTML = '';
-            offlineUsers.innerHTML = '';
+    // Join the chat room for this event
+    socket.emit('join', {username: username, event_id: eventId});
 
-            data.online_users.forEach(user => {
-                const userElement = document.createElement('li');
-                userElement.textContent = user.username;
-                onlineUsers.appendChild(userElement);
+    // Listen for messages from the server
+    socket.on('message', function(data) {
+        const messageElement = document.createElement('p');
+        messageElement.innerHTML = `<span>${data.username}:</span> ${data.msg}`;
+        messageBox.appendChild(messageElement);
+        messageBox.scrollTop = messageBox.scrollHeight; // Scroll to the bottom
+    });
+
+    // Handle the form submission for sending messages
+    messageForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const message = messageInput.value;
+        if (message.trim() !== '') {
+            socket.emit('message', {username: username, msg: message, event_id: eventId});
+            messageInput.value = ''; // Clear the input after sending
+        }
+    });
+
+    // Load previous messages (use this part after updating the backend)
+    fetch(`/event/${eventId}/messages`)
+        .then(response => response.json())
+        .then(data => {
+            data.messages.forEach(msg => {
+                const messageElement = document.createElement('p');
+                messageElement.innerHTML = `<span>${msg.username}:</span> ${msg.content}`;
+                messageBox.appendChild(messageElement);
             });
-
-            data.offline_users.forEach(user => {
-                const userElement = document.createElement('li');
-                userElement.textContent = user.name;
-                offlineUsers.appendChild(userElement);
-            });
-
-            document.getElementById('online-count').textContent = data.online_users.length;
+            messageBox.scrollTop = messageBox.scrollHeight; // Scroll to the bottom
         });
-    </script>
+
+    // Load participants (use this part after updating the backend)
+    fetch(`/event/${eventId}/participants`)
+        .then(response => response.json())
+        .then(data => {
+            data.participants.forEach(participant => {
+                const participantElement = document.createElement('li');
+                participantElement.textContent = participant.name;
+                participantsList.appendChild(participantElement);
+            });
+        });
+</script>
 </body>
 </html>

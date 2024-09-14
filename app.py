@@ -1,24 +1,29 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
-from flask_socketio import SocketIO, join_room, leave_room, send
+from flask_socketio import SocketIO, join_room, leave_room, emit
 from flask_bcrypt import Bcrypt
 import mysql.connector
 
 app = Flask(__name__)
+
+# Configuration settings
 app.config['SECRET_KEY'] = 'secret!'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:yes@localhost/event'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Initialize extensions
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 socketio = SocketIO(app)
 
+# User model
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
 
+# Event model
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -28,7 +33,9 @@ class Event(db.Model):
     phone = db.Column(db.String(20), nullable=False)
     domain = db.Column(db.String(100), nullable=False)
     registrations = db.relationship('Registration', backref='event', lazy=True)
+    messages = db.relationship('Message', backref='event', lazy=True)
 
+# Registration model
 class Registration(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=False)
@@ -39,9 +46,17 @@ class Registration(db.Model):
     branch = db.Column(db.String(50), nullable=False)
     year = db.Column(db.String(20), nullable=False)
 
-# Dictionary to keep track of online users per room
+# Message model for chatroom
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(500), nullable=False)
+    username = db.Column(db.String(100), nullable=False)
+    event_id = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=False)
+
+# Online users dictionary
 online_users = {}
 
+# Routes
 @app.route('/')
 def index():
     events = Event.query.all()
@@ -75,7 +90,7 @@ def register(event_id):
     if request.method == 'POST':
         name = request.form['name']
         phone = request.form['phone']
-        team_members = request.form.get('team_members', '')  # Use .get to handle the case when the field is not provided
+        team_members = request.form.get('team_members', '')
         college_name = request.form['college_name']
         branch = request.form['branch']
         year = request.form['year']
@@ -96,52 +111,53 @@ def event_detail(event_id):
     registrations = Registration.query.filter_by(event_id=event_id).all()
     return render_template('event_detail.html', event=event, registrations=registrations)
 
-@app.route('/chat/<int:event_id>')
-def chat(event_id):
+# Chatroom for each event
+@app.route('/event/<int:event_id>/chat', methods=['GET', 'POST'])
+def event_chat(event_id):
     event = Event.query.get_or_404(event_id)
-    registrations = Registration.query.filter_by(event_id=event_id).all()
+    if not session.get('user_id'):
+        return redirect(url_for('login'))
     
-    # Separate online and offline users
-    room = str(event_id)
-    online_users_list = online_users.get(room, [])
-    online_usernames = [user['username'] for user in online_users_list]
-    offline_users = [registration for registration in registrations if registration.name not in online_usernames]
+    user = User.query.get(session['user_id'])
+    return render_template('chat.html', event=event, username=user.name)
 
-    return render_template('chat.html', event=event, registrations=registrations, 
-                           online_users=online_users_list, offline_users=offline_users,
-                           online_users_count=len(online_users_list), offline_users_count=len(offline_users))
-
+# SocketIO events
 @socketio.on('join')
 def handle_join(data):
     username = data['username']
-    room = str(data['room'])
-    
+    event_id = data['event_id']
+    room = f"event_{event_id}"
     join_room(room)
-    if room not in online_users:
-        online_users[room] = []
-    online_users[room].append({'username': username})
-    
-    send(f'{username} has joined the room.', room=room)
-    socketio.emit('user_update', {'online_users': online_users[room]}, room=room)
+    emit('message', {'msg': f'{username} has joined the chat.'}, to=room)
+
+@socketio.on('message')
+def handle_message(data):
+    event_id = data['event_id']
+    room = f"event_{event_id}"
+    message = Message(content=data['msg'], username=data['username'], event_id=event_id)
+    db.session.add(message)
+    db.session.commit()
+    emit('message', {'username': data['username'], 'msg': data['msg']}, to=room)
 
 @socketio.on('leave')
 def handle_leave(data):
     username = data['username']
-    room = str(data['room'])
-    
+    event_id = data['event_id']
+    room = f"event_{event_id}"
     leave_room(room)
-    if room in online_users:
-        online_users[room] = [user for user in online_users[room] if user['username'] != username]
-        if not online_users[room]:
-            del online_users[room]
-    
-    send(f'{username} has left the room.', room=room)
-    socketio.emit('user_update', {'online_users': online_users.get(room, [])}, room=room)
+    emit('message', {'msg': f'{username} has left the chat.'}, to=room)
 
-@socketio.on('message')
-def handle_message(data):
-    send(data['message'], room=data['room'])
+@app.route('/event/<int:event_id>/messages')
+def get_messages(event_id):
+    messages = Message.query.filter_by(event_id=event_id).all()
+    return {'messages': [{'username': m.username, 'content': m.content} for m in messages]}
 
+@app.route('/event/<int:event_id>/participants')
+def get_participants(event_id):
+    registrations = Registration.query.filter_by(event_id=event_id).all()
+    return {'participants': [{'name': r.name} for r in registrations]}
+
+# User login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -155,6 +171,7 @@ def login():
             return 'Invalid email or password', 401
     return render_template('login.html')
 
+# User sign-up route
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
@@ -175,32 +192,15 @@ def sign_up():
         return redirect(url_for('login'))
     return render_template('signup.html')
 
-def get_db_connection():
-    connection = mysql.connector.connect(
-        host="localhost",
-        user="Root",
-        password="yes",
-        database="event"
-    )
-    return connection
-
+# Profile page
 @app.route('/profile')
 def profile():
-    # Sample data (replace with your database query)
-    user = {
-        "name": "Prem Mishra",
-        "email": "try.prem@gmail.com",
-        "upcoming_events": [
-            {"title": "Box Cricket", "date": "August 15-17, 2023", "location": "Theem Coe, CA"},
-            {"title": "Badminton", "date": "October 5-7, 2023", "location": "Main Ground, NY"},
-        ],
-        "past_events": [
-            {"title": "Blind Coding", "date": "November 10-12, 2022", "location": "Web lab, IL"},
-            {"title": "Pubg", "date": "November 10-12, 2022", "location": "Old building, IL"},
-        ],
-    }
+    if not session.get('user_id'):
+        return redirect(url_for('login'))
+    user = User.query.get(session['user_id'])
     return render_template('profile.html', user=user)
 
+# Create database tables and run the app
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
