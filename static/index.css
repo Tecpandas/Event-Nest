@@ -1,53 +1,50 @@
-/* index.css */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Merriweather', serif;
   margin: 0;
   padding: 0;
   background-color: #121212;
   color: #e0e0e0;
 }
 
+/* Header Styling */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #000;
+  position: relative;
+}
+
 h1.event-nest-heading {
-  font-family: 'Merriweather', serif;
   color: #ffffff;
   font-size: 36px;
   font-weight: 700;
+  text-align: center;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 }
 
-header {
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 50px;
-}
-
 .user-profile {
-  position: absolute;
-  top: 20px;
-  left: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .user-profile .user-icon {
-  width: 40px; /* Adjust the size of the icon if needed */
-  height: 40px; /* Adjust the size of the icon if needed */
-  border-radius: 50%; /* Optional: if you want a circular icon */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
 .user-profile .username {
-  margin-left: 10px; /* Space between the icon and username */
-  color: #ffffff; /* Adjust color if necessary */
+  margin-left: 10px;
+  color: #ffffff;
 }
 
 .top-right-buttons {
   display: flex;
   gap: 10px;
-  position: absolute;
-  right: 20px;
-  top: 20px;
 }
 
 .top-right-buttons .btn {
@@ -58,86 +55,52 @@ header {
   color: #ffffff;
   text-decoration: none;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .top-right-buttons .btn:hover {
   background-color: #985eff;
 }
 
+/* Event Container Styles */
 .event-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: left;
+  justify-content: flex-start;
   padding: 20px;
+  margin-top: 20px; /* Add space between header and event cards */
 }
 
-/* Event Card */
+/* Event Card Styles */
 .event-card {
-  background-color: #1e1e1e;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
+  background-color: #242424;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
   width: 300px;
   margin: 20px;
   padding: 20px;
-  text-align: left;
-  color: #e0e0e0;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.event-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-}
-
-.event-card h2 {
-  margin-top: 0;
   color: #ffffff;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 2px solid #ffffff; /* Added white border */
 }
 
-.event-card p {
-  margin: 10px 0;
-}
-
-.event-card .date-time {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px 0;
-}
-
-.btn {
-  padding: 0.8em 1.0em;
-  border: 2px solid #764aac;
-  position: relative;
-  overflow: hidden;
-  background-color: transparent;
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 16px;
-  transition: 0.3s;
-  z-index: 1;
-  font-family: inherit;
-  color: #a165d2;
-}
-
-.btn::before {
-  content: '';
-  width: 0;
-  height: 300%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
-  background: #945bd2;
-  transition: 0.5s ease;
+/* Card Buttons */
+.event-card .btn {
   display: block;
-  z-index: -1;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #bb86fc;
+  color: #ffffff;
+  border-radius: 5px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: 'Merriweather', serif;
+  transition: background-color 0.3s ease;
 }
 
-.btn:hover::before {
-  width: 105%;
-}
-
-.btn:hover {
-  color: #111;
+.event-card .btn:hover {
+  background-color: #985eff;
 }

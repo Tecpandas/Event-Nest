@@ -1,0 +1,185 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #060101;
+    color: #ffffff;
+  }
+  
+  header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 0 20px;
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Adjust space between search bar and buttons */
+  }
+  
+  .user-profile {
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Add space between user profile and heading */
+  }
+  
+  .user-profile .user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ffffff; /* Add a border to make it stand out */
+  }
+  
+  .user-profile .username {
+    margin-left: 10px;
+    color: #ffffff;
+  }
+  
+  h1.event-nest-heading {
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0;
+  }
+  
+  /* Advanced Search Bar Styles */
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #242424;
+    border-radius: 20px;
+    padding: 5px 10px;
+    border: 2px solid #ffffff; /* Border to match the event cards */
+  }
+  
+  .search-input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    padding: 5px;
+    font-size: 16px;
+    width: 200px; /* Adjust the width as needed */
+  }
+  
+  .search-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-btn img {
+    width: 20px;
+    height: 20px;
+    filter: invert(100%); /* Make the icon white */
+  }
+  
+  hr.header-divider {
+    border: none;
+    height: 1px;
+    background-color: #4e4d4d;
+    margin: 3;
+  }
+  
+  .top-right-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .top-right-buttons .btn {
+    padding: 10px 20px;
+    background-color: #6c2fb7;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .top-right-buttons .btn:hover {
+    background-color: #5e39aa;
+  }
+  
+  /* Event Container Styles */
+  .event-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 20px;
+    margin-top: 20px; /* Add space between header and event cards */
+  }
+  
+  /* Event Card Styles */
+  .event-card {
+    background-color: #242424;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    width: 300px;
+    margin: 20px;
+    padding: 20px;
+    color: #ffffff;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 2px solid #ffffff; /* Added white border */
+  }
+  
+  .event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+  }
+  
+  .event-card h2 {
+    margin-top: 0;
+    color: #bb86fc;
+  }
+  
+  .event-card p {
+    margin: 10px 0;
+  }
+  
+  /* Card Buttons */
+  .card-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .card-buttons .btn {
+    padding: 10px 20px;
+    background-color: #ffffff; /* Changed button background color to white */
+    border: none;
+    border-radius: 5px;
+    color: #242424; /* Changed text color to match the card background */
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  /* Hover state for buttons */
+  .card-buttons .btn:hover {
+    background-color: #e0e0e0; /* Slightly darker shade on hover */
+  }
+  
+  /* Additional Button Styling */
+  .btn.register-btn {
+    background-color: #ffffff; /* Changed button background color to white */
+  }
+  
+  .btn.go-to-event-btn {
+    background-color: #ffffff; /* Changed button background color to white */
+  }
+  
+  .btn.go-to-event-btn:hover {
+    background-color: #e0e0e0; /* Slightly darker shade on hover */
+  }
+  
+  

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,96 +33,6 @@
                 <a href="{{ url_for('post_event') }}" class="btn">Post a New Event</a>
                 <a href="{{ url_for('sign_up') }}" class="btn">Sign Up</a>
             </div>
-=======
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event List</title>
-<<<<<<< HEAD
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url('{{ url_for('static', filename='bg-2.jpg') }}');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            color: white;
-        }
-
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-            color: #ffffff;
-        }
-
-        a {
-            text-decoration: none;
-            color: #bb86fc;
-            display: inline-block;
-            margin: 20px 0;
-        }
-
-        .event-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .event-card {
-            background-color: #1e1e1e;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            border-radius: 5px;
-            width: 300px;
-            margin: 20px;
-            padding: 20px;
-            text-align: center;
-            color: #e0e0e0;
-        }
-
-        .event-card h2 {
-            margin-top: 0;
-            color: #ffffff;
-        }
-
-        .event-card p {
-            margin: 10px 0;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            margin-top: 10px;
-            color: #ffffff;
-            background-color: #bb86fc;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: #985eff;
-        }
-
-        /* Additional styles for the rest of the project */
-    </style>
-=======
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
->>>>>>> 38555a6eb43b674a4f3679fed755392e6279022c
-</head>
-<body>
-    <header>
-        <h1 class="event-nest-heading">EVENT-NEST</h1>
-        <div class="top-right-buttons">
-            <a href="{{ url_for('post_event') }}" class="btn">Post a New Event</a>
-            <a href="{{ url_for('login') }}" class="btn">Login</a>
->>>>>>> dee4998eabff923526f6e933805e2739c224129e
         </div>
     </header>
 
@@ -133,7 +42,6 @@
     <main>
         <div class="event-container">
             {% for event in events %}
-<<<<<<< HEAD
                 <div class="event-card">
                     <h2>{{ event.name }}</h2>
                     <p><strong>Address:</strong> {{ event.address }}</p>
@@ -145,38 +53,6 @@
                         <a href="{{ url_for('event_detail', event_id=event.id) }}" class="btn go-to-event-btn">Go to Event</a>
                     </div>
                 </div>
-=======
-            <div class="event-card">
-                <h2>{{ event.name }}</h2>
-                <div id="carousel-{{ event.id }}" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="{{ url_for('static', filename='image1.jpg') }}" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{{ url_for('static', filename='image2.jpg') }}" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{{ url_for('static', filename='image3.jpg') }}" class="d-block w-100" alt="...">
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#carousel-{{ event.id }}" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carousel-{{ event.id }}" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-                <p><strong>Address:</strong> {{ event.address }}</p>
-                <p><strong>Time:</strong> {{ event.time }}</p>
-                <p><strong>Domain:</strong> {{ event.domain }}</p>
-                <p><strong>Date:</strong> {{ event.date }}</p>
-                <a href="{{ url_for('register', event_id=event.id) }}" class="btn">Register</a>
-                <a href="{{ url_for('event_detail', event_id=event.id) }}" class="btn">Go to Event</a>
-            </div>
->>>>>>> dee4998eabff923526f6e933805e2739c224129e
             {% endfor %}
         </div>
     </main>

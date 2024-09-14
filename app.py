@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Configuration settings
 app.config['SECRET_KEY'] = 'secret!'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:yes@localhost/event'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://Root:yes@localhost/event'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize extensions
@@ -22,6 +22,7 @@ class User(db.Model):
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
+    registrations = db.relationship('Registration', backref='user', lazy=True)
 
 # Event model
 class Event(db.Model):
@@ -39,6 +40,7 @@ class Event(db.Model):
 class Registration(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
     team_members = db.Column(db.String(500), nullable=True)
@@ -46,14 +48,13 @@ class Registration(db.Model):
     branch = db.Column(db.String(50), nullable=False)
     year = db.Column(db.String(20), nullable=False)
 
-# Message model for chatroom
+# Message model
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(500), nullable=False)
-    username = db.Column(db.String(100), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=False)
 
-# Online users dictionary
 online_users = {}
 
 # Routes
@@ -94,7 +95,11 @@ def register(event_id):
         college_name = request.form['college_name']
         branch = request.form['branch']
         year = request.form['year']
-        new_registration = Registration(event_id=event_id, name=name, phone=phone, team_members=team_members,
+        if 'user_id' in session:
+            user_id = session['user_id']
+        else:
+            return "User not logged in", 403
+        new_registration = Registration(event_id=event_id, user_id=user_id, name=name, phone=phone, team_members=team_members,
                                         college_name=college_name, branch=branch, year=year)
         db.session.add(new_registration)
         try:
@@ -111,17 +116,18 @@ def event_detail(event_id):
     registrations = Registration.query.filter_by(event_id=event_id).all()
     return render_template('event_detail.html', event=event, registrations=registrations)
 
-# Chatroom for each event
 @app.route('/event/<int:event_id>/chat', methods=['GET', 'POST'])
 def event_chat(event_id):
     event = Event.query.get_or_404(event_id)
-    if not session.get('user_id'):
-        return redirect(url_for('login'))
     
-    user = User.query.get(session['user_id'])
-    return render_template('chat.html', event=event, username=user.name)
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+        username = user.name
+    else:
+        username = 'Guest'
+    
+    return render_template('chat.html', event=event, username=username)
 
-# SocketIO events
 @socketio.on('join')
 def handle_join(data):
     username = data['username']
@@ -134,7 +140,7 @@ def handle_join(data):
 def handle_message(data):
     event_id = data['event_id']
     room = f"event_{event_id}"
-    message = Message(content=data['msg'], username=data['username'], event_id=event_id)
+    message = Message(content=data['msg'], user_id=data['user_id'], event_id=event_id)
     db.session.add(message)
     db.session.commit()
     emit('message', {'username': data['username'], 'msg': data['msg']}, to=room)
@@ -150,14 +156,13 @@ def handle_leave(data):
 @app.route('/event/<int:event_id>/messages')
 def get_messages(event_id):
     messages = Message.query.filter_by(event_id=event_id).all()
-    return {'messages': [{'username': m.username, 'content': m.content} for m in messages]}
+    return {'messages': [{'username': User.query.get(m.user_id).name, 'content': m.content} for m in messages]}
 
 @app.route('/event/<int:event_id>/participants')
 def get_participants(event_id):
     registrations = Registration.query.filter_by(event_id=event_id).all()
-    return {'participants': [{'name': r.name} for r in registrations]}
+    return {'participants': [{'name': User.query.get(r.user_id).name} for r in registrations]}
 
-# User login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -171,7 +176,6 @@ def login():
             return 'Invalid email or password', 401
     return render_template('login.html')
 
-# User sign-up route
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
@@ -179,7 +183,6 @@ def sign_up():
         email = request.form['email']
         password = request.form['password']
         
-        # Hash the password using bcrypt
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         
         new_user = User(name=name, email=email, password=hashed_password)
@@ -192,16 +195,24 @@ def sign_up():
         return redirect(url_for('login'))
     return render_template('signup.html')
 
-# Profile page
 @app.route('/profile')
 def profile():
-    if not session.get('user_id'):
+    if 'user_id' not in session:
         return redirect(url_for('login'))
+    
     user = User.query.get(session['user_id'])
-    return render_template('profile.html', user=user)
+    
+    upcoming_events = Event.query.join(Registration).filter(Registration.user_id == user.id).filter(Event.date >= '2024-01-01').all()
+    past_events = Event.query.join(Registration).filter(Registration.user_id == user.id).filter(Event.date < '2024-01-01').all()
+    
+    return render_template('profile.html', user=user, upcoming_events=upcoming_events, past_events=past_events)
 
-# Create database tables and run the app
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)  
+    return redirect(url_for('login'))  
+
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()  # Ensure the tables are created
+        db.create_all()  
     socketio.run(app, debug=True)
