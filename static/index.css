@@ -6,7 +6,6 @@ body {
   color: #e0e0e0;
 }
 
-/* Header Styling */
 header {
   display: flex;
   align-items: center;
@@ -62,16 +61,14 @@ h1.event-nest-heading {
   background-color: #985eff;
 }
 
-/* Event Container Styles */
 .event-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   padding: 20px;
-  margin-top: 20px; /* Add space between header and event cards */
+  margin-top: 20px; 
 }
 
-/* Event Card Styles */
 .event-card {
   background-color: #242424;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
@@ -81,10 +78,9 @@ h1.event-nest-heading {
   padding: 20px;
   color: #ffffff;
   transition: transform 0.2s, box-shadow 0.2s;
-  border: 2px solid #ffffff; /* Added white border */
+  border: 2px solid #ffffff; 
 }
 
-/* Card Buttons */
 .event-card .btn {
   display: block;
   width: 100%;

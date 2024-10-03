@@ -88,18 +88,15 @@
 <body>
 
 <div class="chat-container">
-    <!-- Participants List -->
     <div class="participants">
         <h2>Participants</h2>
         <ul id="participants-list">
-            <!-- Participants will be dynamically added here -->
         </ul>
     </div>
 
     <!-- Chat Area -->
     <div class="chat-area">
         <div class="message-box" id="message-box">
-            <!-- Messages will be displayed here -->
         </div>
         <form id="message-form" class="message-form">
             <input type="text" id="message-input" placeholder="Enter your message" autocomplete="off">
@@ -116,13 +113,11 @@
     const messageForm = document.getElementById('message-form');
     const participantsList = document.getElementById('participants-list');
 
-    const username = "{{ username }}"; // From backend
-    const eventId = "{{ event.id }}"; // From backend
+    const username = "{{ username }}"; 
+    const eventId = "{{ event.id }}"; 
 
-    // Join the chat room for this event
     socket.emit('join', {username: username, event_id: eventId});
 
-    // Listen for messages from the server
     socket.on('message', function(data) {
         const messageElement = document.createElement('p');
         messageElement.innerHTML = `<span>${data.username}:</span> ${data.msg}`;
@@ -130,17 +125,15 @@
         messageBox.scrollTop = messageBox.scrollHeight; // Scroll to the bottom
     });
 
-    // Handle the form submission for sending messages
     messageForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const message = messageInput.value;
         if (message.trim() !== '') {
             socket.emit('message', {username: username, msg: message, event_id: eventId});
-            messageInput.value = ''; // Clear the input after sending
+            messageInput.value = ''; 
         }
     });
 
-    // Load previous messages (use this part after updating the backend)
     fetch(`/event/${eventId}/messages`)
         .then(response => response.json())
         .then(data => {
@@ -149,10 +142,9 @@
                 messageElement.innerHTML = `<span>${msg.username}:</span> ${msg.content}`;
                 messageBox.appendChild(messageElement);
             });
-            messageBox.scrollTop = messageBox.scrollHeight; // Scroll to the bottom
+            messageBox.scrollTop = messageBox.scrollHeight; 
         });
 
-    // Load participants (use this part after updating the backend)
     fetch(`/event/${eventId}/participants`)
         .then(response => response.json())
         .then(data => {

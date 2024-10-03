@@ -14,9 +14,7 @@
         
         <div class="top-right-buttons">
             <a href="{{ url_for('event_chat', event_id=event.id) }}" class="btn">Chatroom</a>
-
         </div>
-      
     </header>
 
     <div class="event-details-container">
@@ -25,7 +23,10 @@
             <p><strong>Address:</strong> {{ event.address }}</p>
             <p><strong>Time:</strong> {{ event.time }}</p>
             <p><strong>Domain:</strong> {{ event.domain }}</p>
+            <!-- Locate button -->
+            <a href="https://www.google.com/maps/search/?api=1&query={{ event.address | urlencode }}" target="_blank" class="btn">Locate</a>
         </div>
+
         <div class="registrations-box">
             <h2>Registrations</h2>
             <table class="registrations-table">

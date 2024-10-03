@@ -1,4 +1,3 @@
-/* General Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -23,20 +22,20 @@ header {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 20px; /* Adjust space between search bar and buttons */
+  gap: 20px; 
 }
 
 .user-profile {
   display: flex;
   align-items: center;
-  margin-right: 20px; /* Add space between user profile and heading */
+  margin-right: 20px; 
 }
 
 .user-profile .user-icon {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 2px solid #ffffff; /* Add a border to make it stand out */
+  border: 2px solid #ffffff; 
 }
 
 .user-profile .username {
@@ -52,14 +51,14 @@ h1.event-nest-heading {
   margin: 0;
 }
 
-/* Advanced Search Bar Styles */
+
 .search-bar {
   display: flex;
   align-items: center;
   background-color: #242424;
   border-radius: 20px;
   padding: 5px 10px;
-  border: 2px solid #ffffff; /* Border to match the event cards */
+  border: 2px solid #ffffff; 
 }
 
 .search-input {
@@ -69,7 +68,7 @@ h1.event-nest-heading {
   color: #ffffff;
   padding: 5px;
   font-size: 16px;
-  width: 200px; /* Adjust the width as needed */
+  width: 200px; 
 }
 
 .search-btn {
@@ -83,7 +82,7 @@ h1.event-nest-heading {
 .search-btn img {
   width: 20px;
   height: 20px;
-  filter: invert(100%); /* Make the icon white */
+  filter: invert(100%); 
 }
 
 
@@ -114,16 +113,16 @@ hr.header-divider {
   background-color: #5e39aa;
 }
 
-/* Event Container Styles */
+
 .event-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   padding: 20px;
-  margin-top: 20px; /* Add space between header and event cards */
+  margin-top: 20px; 
 }
 
-/* Event Card Styles */
+
 .event-card {
   background-color: #242424;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
@@ -133,7 +132,7 @@ hr.header-divider {
   padding: 20px;
   color: #ffffff;
   transition: transform 0.2s, box-shadow 0.2s;
-  border: 2px solid #ffffff; /* Added white border */
+  border: 2px solid #ffffff; 
 }
 
 .event-card:hover {
@@ -150,7 +149,7 @@ hr.header-divider {
   margin: 10px 0;
 }
 
-/* Card Buttons */
+
 .card-buttons {
   display: flex;
   justify-content: space-between;
@@ -158,29 +157,29 @@ hr.header-divider {
 
 .card-buttons .btn {
   padding: 10px 20px;
-  background-color: #ffffff; /* Changed button background color to white */
+  background-color: #ffffff; 
   border: none;
   border-radius: 5px;
-  color: #242424; /* Changed text color to match the card background */
+  color: #242424; 
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-/* Hover state for buttons */
+
 .card-buttons .btn:hover {
-  background-color: #e0e0e0; /* Slightly darker shade on hover */
+  background-color: #e0e0e0; 
 }
 
 /* Additional Button Styling */
 .btn.register-btn {
-  background-color: #ffffff; /* Changed button background color to white */
+  background-color: #ffffff; 
 }
 
 .btn.go-to-event-btn {
-  background-color: #ffffff; /* Changed button background color to white */
+  background-color: #ffffff; 
 }
 
 .btn.go-to-event-btn:hover {
-  background-color: #e0e0e0; /* Slightly darker shade on hover */
+  background-color: #e0e0e0; 
 }

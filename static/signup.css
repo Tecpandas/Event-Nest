@@ -1,4 +1,4 @@
-/* General Styles */
+
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -11,7 +11,6 @@ body {
     height: 100vh;
 }
 
-/* Signup Container */
 .signup-container {
     display: flex;
     justify-content: space-between;
@@ -25,7 +24,6 @@ body {
     padding: 20px;
 }
 
-/* Left Side */
 .signup-left {
     padding: 40px;
     flex: 1;
@@ -47,7 +45,6 @@ body {
     font-size: 16px;
 }
 
-/* Input Group */
 .input-group {
     margin-bottom: 20px;
     display: flex;
@@ -74,7 +71,6 @@ body {
     border-color: #1dd1a1;
 }
 
-/* Button */
 .btn {
     padding: 14px;
     border-radius: 8px;
@@ -92,7 +88,6 @@ body {
     background-color: #10ac84;
 }
 
-/* Right Side */
 .signup-right {
     flex: 1;
     background-color: #2c2c2e;
@@ -108,7 +103,6 @@ body {
     border-radius: 12px;
 }
 
-/* Responsive Design */
 @media (max-width: 900px) {
     .signup-container {
         flex-direction: column;

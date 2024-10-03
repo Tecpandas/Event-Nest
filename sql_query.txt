@@ -1,0 +1,111 @@
+USE mysql;
+
+-- Ensure the correct user is set up with privileges
+SELECT user, host, authentication_string FROM mysql.user WHERE user='Root' AND host='localhost';
+
+-- Create or ensure the 'Root' user exists and has the correct privileges
+CREATE USER IF NOT EXISTS 'Root'@'localhost' IDENTIFIED BY 'yes';
+GRANT ALL PRIVILEGES ON event.* TO 'Root'@'localhost';
+FLUSH PRIVILEGES;
+
+USE event;
+
+-- Display existing tables
+SHOW TABLES;
+
+-- Drop foreign key to modify the `registration` table
+ALTER TABLE registration DROP FOREIGN KEY registration_ibfk_1;
+
+-- Drop and recreate the `event` table
+DROP TABLE IF EXISTS event;
+CREATE TABLE event (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    address VARCHAR(200) NOT NULL,
+    date DATE NOT NULL,   -- Using DATE type for better manipulation of upcoming/past events
+    time VARCHAR(50) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    domain VARCHAR(100) NOT NULL
+);
+
+ALTER TABLE event
+ADD COLUMN max_participants INT NOT NULL DEFAULT 0;
+
+-- Add an index for optimizing upcoming/past event queries
+CREATE INDEX idx_event_date ON event(date);
+
+-- Describe the `registration` table to verify the structure
+DESCRIBE registration;
+
+-- Drop and recreate the `registration` table
+DROP TABLE IF EXISTS registration;
+CREATE TABLE registration (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    event_id INT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    team_members VARCHAR(500),
+    college_name VARCHAR(100) NOT NULL,
+    branch VARCHAR(50) NOT NULL,
+    year VARCHAR(20) NOT NULL,
+    user_id INT NOT NULL,   -- Add user_id to associate a registration with a user
+    FOREIGN KEY (event_id) REFERENCES event(id) ON DELETE CASCADE,  -- Foreign key referencing event
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE     -- Foreign key referencing user
+);
+
+-- Modify the `user` table for login and sign-up functionality
+CREATE TABLE IF NOT EXISTS user (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(200) NOT NULL
+);
+
+-- Drop and recreate the `messages` table to store chat messages
+DROP TABLE IF EXISTS messages;
+CREATE TABLE IF NOT EXISTS messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    event_id INT NOT NULL,   -- Reference to the event associated with the chatroom
+    user_id INT NOT NULL,    -- Reference to the user who sent the message
+    message TEXT NOT NULL,   -- The actual message content
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,   -- Timestamp for the message
+    FOREIGN KEY (event_id) REFERENCES event(id) ON DELETE CASCADE,  -- Cascading delete if event is deleted
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE     -- Cascading delete if user is deleted
+);
+
+-- Select data from `event`, `registration`, and other tables to verify the contents
+SELECT * FROM event;
+SELECT * FROM registration;
+SELECT * FROM user;
+SELECT * FROM messages;
+
+-- Join query to retrieve detailed registration information with event details
+SELECT
+    registration.id AS registration_id,
+    registration.name AS registrant_name,
+    registration.phone AS registrant_phone,
+    registration.team_members AS registrant_team_members,
+    registration.college_name AS registrant_college_name,
+    registration.branch AS registrant_branch,
+    registration.year AS registrant_year,
+    event.name AS event_name,
+    event.address AS event_address,
+    event.time AS event_time,
+    event.domain AS event_domain,
+    user.name AS user_name
+FROM
+    registration
+JOIN
+    event ON registration.event_id = event.id
+JOIN
+    user ON registration.user_id = user.id;
+
+-- Retrieve upcoming events for a specific user
+SELECT * FROM event 
+WHERE date > CURDATE() 
+AND id IN (SELECT event_id FROM registration WHERE user_id = 1);
+
+-- Retrieve past events for a specific user
+SELECT * FROM event 
+WHERE date < CURDATE() 
+AND id IN (SELECT event_id FROM registration WHERE user_id = 1);

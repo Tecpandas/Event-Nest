@@ -10,7 +10,7 @@
     <div class="container">
         <aside class="sidebar">
             <div class="user-info">
-                <img src="{{ url_for('static', filename='See.jpeg') }}" alt="User Icon" class="user-icon">
+                <img src="{{ url_for('static', filename='user-icon.png') }}" alt="User Icon" class="user-icon">
                 <h2>{{ user.name }}</h2>
                 <p>{{ user.email }}</p>
             </div>
@@ -46,7 +46,6 @@
             <section class="events past-events">
                 <h2>Past Events</h2>
                 <div class="event-cards">
-                    <!-- Event Cards will be dynamically generated here -->
                     {% for event in user.past_events %}
                     <div class="event-card">
                         <h3>{{ event.title }}</h3>
@@ -55,6 +54,18 @@
                     </div>
                     {% endfor %}
                 </div>
+                <div class="user-info">
+                    <img src="{{ url_for('static', filename='user-icon.png') }}" alt="User Icon" class="user-icon">
+                    <h2>{{ user.name }}</h2>
+                    <p>{{ user.email }}</p>
+                
+                    {% if badge == 'red' %}
+                    <span class="badge red">Red Badge</span>
+                    {% elif badge == 'gold' %}
+                    <span class="badge gold">Gold Badge</span>
+                    {% endif %}
+                </div>
+                
             </section>
         </main>
     </div>

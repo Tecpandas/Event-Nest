@@ -130,3 +130,19 @@ body {
 .event-card button:hover {
     background-color: #444;
 }
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.red {
+    background-color: red;
+}
+
+.gold {
+    background-color: gold;
+}
