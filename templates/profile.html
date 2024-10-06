@@ -8,11 +8,17 @@
 </head>
 <body>
     <div class="container">
+        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="user-info">
                 <img src="{{ url_for('static', filename='user-icon.png') }}" alt="User Icon" class="user-icon">
                 <h2>{{ user.name }}</h2>
                 <p>{{ user.email }}</p>
+                {% if badge == 'red' %}
+                <span class="badge red">Red Badge</span>
+                {% elif badge == 'gold' %}
+                <span class="badge gold">Gold Badge</span>
+                {% endif %}
             </div>
             <nav>
                 <ul>
@@ -20,54 +26,93 @@
                     <li><a href="#">Appearance</a></li>
                     <li><a href="#">Dashboard</a></li>
                     <li><a href="#">Feedback</a></li>
-                    <li><a href="#">Logout</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
                     <li><a href="#">Edit Profile</a></li>
                 </ul>
             </nav>
         </aside>
+
+        <!-- Main Content -->
         <main class="main-content">
             <div class="profile-header">
                 <h1>Profile</h1>
                 <button class="edit-btn">Edit Profile</button>
             </div>
+
+            <!-- Upcoming Events Section -->
             <section class="events">
                 <h2>Upcoming Events</h2>
                 <div class="event-cards">
-                    <!-- Event Cards will be dynamically generated here -->
+                    <!-- Dynamically generated upcoming event cards -->
                     {% for event in user.upcoming_events %}
                     <div class="event-card">
                         <h3>{{ event.title }}</h3>
                         <p>{{ event.date }} | {{ event.location }}</p>
-                        <button>Manage Event</button>
+                        <button onclick="window.location.href='{{ url_for('event_detail', event_id=event.id) }}'">Manage Event</button>
                     </div>
+                    {% else %}
+                    <p>No upcoming events</p>
                     {% endfor %}
                 </div>
             </section>
+
+            <!-- Past Events Section -->
             <section class="events past-events">
                 <h2>Past Events</h2>
                 <div class="event-cards">
+                    <!-- Dynamically generated past event cards -->
                     {% for event in user.past_events %}
                     <div class="event-card">
                         <h3>{{ event.title }}</h3>
                         <p>{{ event.date }} | {{ event.location }}</p>
-                        <button>Manage Event</button>
+                        <button onclick="window.location.href='{{ url_for('event_detail', event_id=event.id) }}'">Manage Event</button>
                     </div>
+                    {% else %}
+                    <p>No past events</p>
                     {% endfor %}
                 </div>
-                <div class="user-info">
-                    <img src="{{ url_for('static', filename='user-icon.png') }}" alt="User Icon" class="user-icon">
-                    <h2>{{ user.name }}</h2>
-                    <p>{{ user.email }}</p>
-                
-                    {% if badge == 'red' %}
-                    <span class="badge red">Red Badge</span>
-                    {% elif badge == 'gold' %}
-                    <span class="badge gold">Gold Badge</span>
-                    {% endif %}
-                </div>
-                
             </section>
         </main>
     </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <form action="{{ url_for('edit_profile') }}" method="POST">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="{{ user.name }}" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{ user.email }}" required>
+
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Modal handling script
+        var modal = document.getElementById("editProfileModal");
+        var btn = document.querySelector(".edit-btn");
+        var span = document.querySelector(".close-btn");
+
+        // Open the modal when clicking "Edit Profile"
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // Close the modal when clicking the "X" button
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // Close the modal when clicking outside of it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
