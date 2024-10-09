@@ -1,0 +1,80 @@
+/* Leaderboard Container */
+.leaderboard-container {
+    background-color: #1a2238;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #fff;
+}
+
+/* Title */
+.leaderboard-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Leaderboard Items */
+.leaderboard {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #2c2f48;
+    border-radius: 8px;
+    border: 2px solid #2c2f48;
+}
+
+/* Specific Ranking Colors */
+.first-place {
+    border-color: #ffc107;
+}
+
+.second-place {
+    border-color: #bfc1c2;
+}
+
+.third-place {
+    border-color: #cd7f32;
+}
+
+/* Icon Container */
+.icon-container {
+    flex-shrink: 0;
+}
+
+.trophy-icon, .medal-icon, .user-icon {
+    width: 40px;
+    height: 40px;
+}
+
+/* Leaderboard Info */
+.leaderboard-info {
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+.leaderboard-name {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.leaderboard-events {
+    font-size: 14px;
+    color: #bfc1c2;
+}
+
+/* Rank */
+.leaderboard-rank {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffc107;
+}

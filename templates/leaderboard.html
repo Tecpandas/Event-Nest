@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <style>
+         
+        
+        body {
+            font-family: 'Merriweather', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #e0e0e0;
+            }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #1a2238;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #2c2f48;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2c2f48;
+            font-size: 18px;
+            color: #f4f4f9;
+        }
+
+        td {
+            background-color: #343957;
+            font-size: 16px;
+        }
+
+        .rank {
+            font-weight: bold;
+            color: #ffc107;
+        }
+
+        .rank-1 {
+            color: #ffc107; /* Gold */
+        }
+
+        .rank-2 {
+            color: #bfc1c2; /* Silver */
+        }
+
+        .rank-3 {
+            color: #cd7f32; /* Bronze */
+        }
+
+        .highlight-1 {
+            background-color: #2c2f48;
+        }
+
+        .highlight-2 {
+            background-color: #2c2f48;
+        }
+
+        .highlight-3 {
+            background-color: #2c2f48;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+                margin: 20px;
+            }
+
+            th, td {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Top Participants Leaderboard</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Participant Name</th>
+                    <th>Number of Events Registered</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for participant in leaderboard %}
+                <tr class="highlight-{{ loop.index if loop.index <= 3 }}">
+                    <td class="rank rank-{{ loop.index }}">{{ loop.index }}</td>
+                    <td>{{ participant.name }}</td>
+                    <td>{{ participant.event_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

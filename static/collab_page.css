@@ -1,0 +1,96 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #000; /* Black background */
+    color: #e1e1e1; /* Light gray text */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height */
+}
+
+.container {
+    max-width: 600px;
+    padding: 40px;
+    background: linear-gradient(145deg, #1a1a1a, #0d0d0d); /* Dark gradient */
+    border-radius: 15px;
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.5),
+                -8px -8px 16px rgba(255, 255, 255, 0.1); /* Neumorphism effect */
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #007aff; /* Bright blue for the heading */
+}
+
+.input-group {
+    margin-bottom: 20px; /* Space between input groups */
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #2e2e2e; /* Darker input background */
+    color: #e1e1e1;
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    outline: none;
+    box-shadow: 0 0 5px #007aff, 0 0 10px #007aff; /* Focus shadow */
+}
+
+button.btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007aff; /* Bright blue for button */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+button.btn:hover {
+    background-color: #005bb5; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+button.btn:active {
+    transform: translateY(0); /* Reset lift on click */
+}
+
+.collaborations-list {
+    margin-top: 30px; /* Space above collaborations list */
+    border-top: 1px solid #444; /* Divider */
+    padding-top: 20px; /* Padding for content */
+}
+
+.collaborations-list h2 {
+    margin-bottom: 10px;
+}
+
+.collaborations-list ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+}
+
+.collaborations-list li {
+    margin-bottom: 10px; /* Space between collaborations */
+    padding: 10px;
+    background-color: #2e2e2e; /* Darker background for list items */
+    border-radius: 5px;
+}

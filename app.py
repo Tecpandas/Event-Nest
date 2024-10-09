@@ -207,10 +207,86 @@ def profile():
 
     return render_template('profile.html', user=user, upcoming_events=upcoming_events, past_events=past_events, badge=badge)
 
+@app.route('/leaderboard')
+def leaderboard():
+    # Connect to the database
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Execute the leaderboard query
+    query = """
+        SELECT 
+            u.name AS name, 
+            COUNT(r.id) AS event_count
+        FROM 
+            user u
+        JOIN 
+            registration r ON u.id = r.user_id
+        GROUP BY 
+            u.name
+        ORDER BY 
+            event_count DESC
+        LIMIT 10;
+    """
+    cursor.execute(query)
+    leaderboard_data = cursor.fetchall()
+
+    # Close the database connection
+    cursor.close()
+    conn.close()
+
+    # Render the leaderboard page with the leaderboard data
+    return render_template('leaderboard.html', leaderboard=leaderboard_data)
+
+@app.route('/report_event/<int:event_id>')
+def report_event(event_id):
+    # Logic to handle the event report can be added here (e.g., render a report form)
+    return render_template('report_form.html', event_id=event_id)
+
+
+
 @app.route('/edit_profile', methods=['POST'])
 def edit_profile():
     # Logic to handle profile edits goes here
     return redirect(url_for('profile'))
+
+@app.route('/sponsor/<int:event_id>')
+def sponsor_page(event_id):
+    return render_template('sponsor.html', event_id=event_id)
+
+@app.route('/apply_sponsorship/<int:event_id>', methods=['POST'])
+def apply_sponsorship(event_id):
+    business_name = request.form['business_name']
+    contact_person = request.form['contact_person']
+    email = request.form['email']
+    phone = request.form['phone']
+    message = request.form['message']
+
+    # Logic to send email notification to the event organizer
+    event_organizer_email = "organizer@example.com"  # Replace with actual organizer's email
+    subject = f"New Sponsorship Application from {business_name}"
+    body = f"""
+    Business Name: {business_name}
+    Contact Person: {contact_person}
+    Email: {email}
+    Phone: {phone}
+    Message: {message}
+    """
+
+    # Send the email (this is a basic example; use environment variables and better error handling in production)
+    try:
+        with smtplib.SMTP('smtp.example.com', 587) as server:
+            server.starttls()
+            server.login("your_email@example.com", "your_password")  # Use actual credentials
+            server.sendmail(email, event_organizer_email, f"Subject: {subject}\n\n{body}")
+    except Exception as e:
+        print(f"Error sending email: {e}")
+
+    return redirect(url_for('event_detail', event_id=event_id))  # Redirect back to the event details page
+
+# More routes and functions...
+
+
 
 @app.route('/logout')
 def logout():

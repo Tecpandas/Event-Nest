@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsorship Opportunities</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='sponser.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Sponsorship Opportunities</h1>
+    </header>
+
+    <div class="sponsor-container">
+        <h2>Why Sponsor Our Event?</h2>
+        <ul>
+            <li>Promote your brand to a diverse audience.</li>
+            <li>Gain visibility through our marketing channels.</li>
+            <li>Network with potential clients and partners.</li>
+            <li>Receive recognition on event materials.</li>
+            <li>Get exclusive access to event data and insights.</li>
+            <li>Participate in post-event promotional opportunities.</li>
+            <li>Showcase your products or services during the event.</li>
+        </ul>
+
+        <h2>Rules for Sponsorship</h2>
+        <ul>
+            <li>All sponsorship applications must be submitted at least 14 days before the event.</li>
+            <li>Each sponsor is required to provide promotional materials two weeks prior to the event.</li>
+            <li>All sponsorships are subject to approval by the event organizers.</li>
+            <li>Sponsors are expected to adhere to event policies and guidelines.</li>
+            <li>Payment must be completed before the event date to secure sponsorship benefits.</li>
+        </ul>
+
+        <div class="apply-section">
+            <input type="checkbox" id="agreement" required>
+            <label for="agreement">I agree to the sponsorship rules and benefits.</label>
+            <button id="apply-sponsor-btn">Apply for Sponsorship</button>
+        </div>
+    </div>
+
+    <div id="sponsorship-form" style="display: none;">
+        <h2>Sponsorship Application Form</h2>
+        <form>
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="company">Company Name:</label>
+            <input type="text" id="company" name="company" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Message (optional):</label>
+            <textarea id="message" name="message" rows="4"></textarea>
+
+            <button type="submit">Submit Application</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('apply-sponsor-btn').onclick = function() {
+            const form = document.getElementById('sponsorship-form');
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>

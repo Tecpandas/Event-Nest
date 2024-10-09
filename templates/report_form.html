@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Event</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='report_form.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Report Event</h1>
+        <form action="{{ url_for('report_event', event_id=event_id) }}" method="POST">
+            <div class="input-group">
+                <label for="reporter_name">Your Name:</label>
+                <input type="text" id="reporter_name" name="reporter_name" required>
+            </div>
+            <div class="input-group">
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="reason">Reason for Reporting:</label>
+                <textarea id="reason" name="reason" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn">Submit Report</button>
+        </form>
+    </div>
+</body>
+</html>

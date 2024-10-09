@@ -1,0 +1,90 @@
+/* sponsor.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Dark background */
+    color: #ffffff; /* Light text color */
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    background-color: #1f1f1f; /* Darker header background */
+    color: #4CAF50; /* Green text for header */
+    padding: 15px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.sponsor-container {
+    margin-top: 20px;
+    background-color: #1f1f1f; /* Darker background for the container */
+    border-radius: 5px;
+    padding: 30px; /* Increased padding for a spacious look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+}
+
+h2 {
+    margin-top: 20px;
+    color: #4CAF50; /* Green headings */
+}
+
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.apply-section {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items */
+    margin-top: 30px; /* Space above the section */
+}
+
+button {
+    background-color: #4CAF50; /* Green background for buttons */
+    color: white; /* White text color */
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+    width: 50%; /* Full width for better visibility */
+}
+
+button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly larger on hover */
+}
+
+#sponsorship-form {
+    background-color: #2a2a2a; /* Darker background for the form */
+    border: 1px solid #444; /* Dark border */
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+#sponsorship-form label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #ccc; /* Lighter text for labels */
+}
+
+#sponsorship-form input,
+#sponsorship-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #444; /* Darker border for inputs */
+    border-radius: 4px;
+    background-color: #333; /* Dark background for inputs */
+    color: #fff; /* White text for inputs */
+}
+
+#sponsorship-form input:focus,
+#sponsorship-form textarea:focus {
+    border-color: #4CAF50; /* Green border on focus */
+    outline: none; /* Remove outline */
+    background-color: #444; /* Slightly lighter on focus */
+}
